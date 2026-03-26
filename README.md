@@ -2,8 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@tofrankie/clean.svg)](https://www.npmjs.com/package/@tofrankie/clean) [![node version](https://img.shields.io/node/v/@tofrankie/clean.svg)](https://nodejs.org) [![npm package license](https://img.shields.io/npm/l/@tofrankie/clean.svg)](https://github.com/tofrankie/clean/blob/main/LICENSE) [![npm last update](https://img.shields.io/npm/last-update/@tofrankie/clean.svg)](https://www.npmjs.com/package/@tofrankie/clean)
 
-Cleans `node_modules`, `dist`, and common cache files (e.g. eslint/stylelint/prettier/turbo/tsbuildinfo) in Node.js projects.
-Works for standalone projects and pnpm monorepos.
+Clean `node_modules`, `dist` and tool cache files (e.g. eslint/stylelint/prettier/turbo/tsbuildinfo). Support for pnpm monorepos.
 
 ## Installation
 

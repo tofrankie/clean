@@ -34,9 +34,7 @@ function createProgram(): Command {
   const collect = (value: string, prev: string[]): string[] => [...prev, value]
   program
     .name('clean')
-    .description(
-      'Clean node_modules, dist outputs and common tool caches (eslint/prettier/stylelint/turbo/tsbuildinfo).'
-    )
+    .description('Clean node_modules, dist and tool cache files.')
     .option('--cwd <path>', 'Use the given directory as project root')
     .option('--root', 'Trace to pnpm workspace root and clean whole workspace')
     .option('--all', 'Run modules + dist + cache')
@@ -95,7 +93,7 @@ interface GlobalOpts {
 function registerDistCommand(program: Command): void {
   program
     .command('dist')
-    .description('Delete dist build outputs')
+    .description('Delete dist')
     .option('-r, --recursive', 'Recursively delete all dist directories under cwdRoot')
     .action(async cmdOpts => {
       await runWithCancellation(async ({ controllerSignal }) => {
@@ -211,7 +209,7 @@ function registerModulesCommand(program: Command): void {
 function registerCacheCommand(program: Command): void {
   program
     .command('cache')
-    .description('Clear caches (eslint/prettier/stylelint/turbo/tsbuildinfo)')
+    .description('Clear cache files (eslint/prettier/stylelint/turbo/tsbuildinfo)')
     .action(async () => {
       await runWithCancellation(async ({ controllerSignal }) => {
         const globalOpts = program.opts() as GlobalOpts

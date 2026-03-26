@@ -98,6 +98,7 @@ function formatDuration(ms: number): string {
 /**
  * Printed before rimraf: stats, target list, skipped.
  * @param options
+ * @param options.cwdRoot
  * @param options.dryRun
  * @param options.requestedTargetCount
  * @param options.matchedCount
@@ -107,6 +108,7 @@ function formatDuration(ms: number): string {
  * @param options.skipped
  */
 function printDeletePlan(options: {
+  cwdRoot: string
   dryRun: boolean
   requestedTargetCount: number
   matchedCount: number
@@ -116,6 +118,7 @@ function printDeletePlan(options: {
   skipped: { path: string; reason: string }[]
 }): void {
   const {
+    cwdRoot,
     dryRun,
     requestedTargetCount,
     matchedCount,
@@ -132,6 +135,9 @@ function printDeletePlan(options: {
       `${dryRun ? 'dry-run start' : 'run start'}: targets=${requestedTargetCount}, matched=${matchedCount}, allowed=${allowedCount}, skipped=${skippedCount}`
     )
   )
+  if (deleted.length > 0 || skipped.length > 0) {
+    console.log(formatMessage(`base: ${cwdRoot}`))
+  }
   if (deleted.length > 0) {
     console.log(formatMessage(dryRun ? 'would delete:' : 'deleting:'))
     for (const p of deleted) console.log(formatMessage(`  - ${p}`, 'default'))
@@ -397,6 +403,7 @@ export async function deleteTargets(options: {
   }
 
   printDeletePlan({
+    cwdRoot,
     dryRun,
     requestedTargetCount: unique.size,
     matchedCount: rawMatchedPaths.size,
