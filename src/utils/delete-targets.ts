@@ -4,7 +4,7 @@ import path from 'node:path'
 import { performance } from 'node:perf_hooks'
 import fg from 'fast-glob'
 import { rimraf } from 'rimraf'
-import { FORBIDDEN_DIRECTORIES } from '@/constants'
+import { FORBIDDEN_DIRECTORIES, PACKAGE_VERSION } from '@/constants'
 import { formatMessage } from '@/utils/format-message'
 
 function isSafeRelative(p: string): boolean {
@@ -130,6 +130,8 @@ function printDeletePlan(options: {
   deleted.sort(compareDisplayPath)
   skipped.sort((x, y) => compareDisplayPath(x.path, y.path))
   console.log(formatMessage(''))
+
+  console.log(formatMessage(`version: ${PACKAGE_VERSION}`))
   console.log(
     formatMessage(
       `${dryRun ? 'dry-run start' : 'run start'}: targets=${requestedTargetCount}, matched=${matchedCount}, allowed=${allowedCount}, skipped=${skippedCount}`

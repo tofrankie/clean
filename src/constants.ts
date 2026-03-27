@@ -1,5 +1,9 @@
 import type { CleanConfig } from '@/types'
 
+declare const __CLEAN_VERSION__: string
+
+export const PACKAGE_VERSION = typeof __CLEAN_VERSION__ === 'string' ? __CLEAN_VERSION__ : 'unknown'
+
 export const CACHE_PATHS = {
   ESLINT: {
     PACKAGE: ['.eslintcache'],
