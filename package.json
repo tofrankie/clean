@@ -80,14 +80,15 @@
   },
   "devDependencies": {
     "@tofrankie/action": "^0.0.4",
-    "@tofrankie/eslint": "^0.0.16",
-    "@tofrankie/prettier": "^0.0.8",
+    "@tofrankie/eslint": "^0.0.17",
+    "@tofrankie/prettier": "^0.0.9",
+    "@tofrankie/tsconfig": "^0.0.2",
     "@types/node": "^25.5.0",
     "eslint": "^9.39.4",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.1",
     "publint": "^0.3.12",
-    "tsdown": "^0.21.6",
+    "tsdown": "^0.21.7",
     "typescript": "^5.9.3",
     "vitest": "^4.1.2"
   }
