@@ -6,10 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["node"],
-    "exactOptionalPropertyTypes": false,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false
+    "types": ["node"]
   },
   "include": ["src", "tests", "vitest.config.ts"]
 }
