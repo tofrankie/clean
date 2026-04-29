@@ -83,6 +83,25 @@ describe('deleteTargets forbidden-path safety', () => {
     expect(rimrafMock).not.toHaveBeenCalled()
   })
 
+  it('skips node_modules tree for **/dist scan', async () => {
+    const cwdRoot = '/tmp/project'
+    fgMock.mockResolvedValue([])
+
+    await deleteTargets({
+      cwdRoot,
+      targets: [{ kind: 'glob', pattern: '**/dist' }],
+    })
+
+    const distCall = fgMock.mock.calls.find(
+      ([patterns]) =>
+        (Array.isArray(patterns) && patterns.includes('**/dist')) || patterns === '**/dist'
+    )
+    expect(distCall).toBeDefined()
+    const [, options] = distCall!
+    expect(options.onlyDirectories).toBe(true)
+    expect(options.ignore).toContain('**/node_modules/**')
+  })
+
   it('skips node_modules tree for file-only globs when pattern omits node_modules', async () => {
     const cwdRoot = '/tmp/project'
     fgMock.mockResolvedValue([])
@@ -101,6 +120,27 @@ describe('deleteTargets forbidden-path safety', () => {
     const [, options] = fileCall!
     expect(options.onlyFiles).toBe(true)
     expect(options.ignore).toContain('**/node_modules/**')
+  })
+
+  it('keeps prettier cache glob scanning under node_modules', async () => {
+    const cwdRoot = '/tmp/project'
+    fgMock.mockResolvedValue([])
+
+    await deleteTargets({
+      cwdRoot,
+      targets: [{ kind: 'glob', pattern: '**/node_modules/.cache/prettier' }],
+    })
+
+    const prettierCall = fgMock.mock.calls.find(
+      ([patterns]) =>
+        (Array.isArray(patterns) && patterns.includes('**/node_modules/.cache/prettier')) ||
+        patterns === '**/node_modules/.cache/prettier'
+    )
+    expect(prettierCall).toBeDefined()
+    const [, options] = prettierCall!
+    expect(options.onlyDirectories).not.toBe(true)
+    expect(options.onlyFiles).not.toBe(true)
+    expect(options.ignore).toBeUndefined()
   })
 
   it('skips non-existing explicit path targets', async () => {

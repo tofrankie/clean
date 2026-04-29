@@ -244,7 +244,11 @@ function fgOptionsForBatch(kind: GlobBatchKind): {
         ignore: [IGNORE_NESTED_NODE_MODULES],
       }
     case 'dist_dirs':
-      return { onlyDirectories: true }
+      return {
+        onlyDirectories: true,
+        // Keep recursive dist cleanup away from dependency trees.
+        ignore: [IGNORE_NODE_MODULES_TREE],
+      }
     case 'files_skip_node_modules_tree':
       return {
         onlyFiles: true,
